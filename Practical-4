@@ -1,0 +1,34 @@
+import heapq
+def heuristic(a, b):
+# Manhattan distance
+return abs(a[0] - b[0]) + abs(a[1] - b[1])
+def a_star_search(grid, start, goal): rows, cols = len(grid), len(grid[0]) open_set = []
+heapq.heappush(open_set, (0 + heuristic(start, goal), 0, start, [start]))
+visited = set()
+while open_set:
+est_total_cost, cost_so_far, current, path = heapq.heappop(open_set)
+if current == goal:
+return path, cost_so_far
+if current in visited: continue
+visited.add(current)
+x, y = current
+for dx, dy in [(-1,0), (1,0), (0,-1), (0,1)]:
+nx, ny = x + dx, y + dy
+if 0 <= nx < rows and 0 <= ny < cols and grid[nx][ny] !=
+'X':
+new_cost = cost_so_far + grid[nx][ny] heapq.heappush(open_set, (new_cost + heuristic((nx,
+ny), goal), new_cost, (nx, ny), path + [(nx, ny)])) return None, float('inf')
+# Define the grid grid = [
+[1, 1, 5],
+[1, 'X', 1],
+[1, 1, 1]
+]
+# Convert 'X' to a non-traversable cell for i in range(len(grid)):
+for j in range(len(grid[0])): if grid[i][j] == 'X':
+grid[i][j] = 'X' else:
+grid[i][j] = int(grid[i][j])
+start = (0, 0)
+goal = (2, 2)
+path, cost = a_star_search(grid, start, goal) print("Optimal Path:", path)
+print("Total Cost:", cost) while pq:
+_, path = heapq.heappop(pq) node = path[-1]

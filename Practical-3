@@ -1,0 +1,29 @@
+import heapq
+# Manhattan-like heuristic (just some assigned values for nodes)
+heuristic = { 'S': 7,
+'A': 6,
+'B': 5,
+'D': 4,
+'C': 2,
+'G': 0	# goal always has 0
+}
+def greedy_bfs(graph, start, goal):
+pq = [(heuristic[start], [start])] # (priority, path) visited = set()
+while pq:
+_, path = heapq.heappop(pq) node = path[-1]
+if node == goal: return path
+if node in visited: continue
+visited.add(node)
+for neighbor in graph[node]: if neighbor not in visited:
+heapq.heappush(pq, (heuristic[neighbor], path+[neighbor]))
+return None
+
+# Example usage graph = {
+'S': ['A'],
+'A': ['B', 'D'],
+'B': ['C'],
+'D': ['C'],
+'C': ['G'], 'G': []
+}
+start, goal = 'S', 'G'
+path = greedy_bfs(graph, start, goal) print("Greedy Best-First Search Path:", path)
